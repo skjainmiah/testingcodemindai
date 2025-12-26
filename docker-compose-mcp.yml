@@ -1,0 +1,39 @@
+# Auto-generated Docker Compose for CodeMind AI MCP Servers
+# This file is automatically managed - manual changes may be overwritten
+# Generated: 2025-12-26T02:14:57.333Z
+
+version: '3.8'
+
+services:
+  # GitHub
+  mcp-mcp-1766715293269:
+    image: node:20-alpine
+    container_name: codemind-mcp-mcp-1766715293269
+    working_dir: /app
+    environment:
+      - GITHUB_PERSONAL_ACCESS_TOKEN=${mcp_mcp-1766715293269_GITHUB_PERSONAL_ACCESS_TOKEN}
+    volumes:
+      - ${WORKSPACE_PATH:-./workspace}:/workspace:rw
+      - ~/.gitconfig:/root/.gitconfig:ro
+      - ~/.ssh:/root/.ssh:ro
+    command: >
+      sh -c "npm install -g npx &&
+             npx npx -y @modelcontextprotocol/server-github"
+    restart: unless-stopped
+    networks:
+      - mcp-network
+    labels:
+      - "mcp.server=mcp-1766715293269"
+      - "mcp.name=GitHub"
+      - "mcp.transport=stdio"
+      - "mcp.enabled=true"
+
+
+networks:
+  mcp-network:
+    driver: bridge
+    name: codemind-mcp-network
+
+volumes:
+  mcp-data:
+    name: codemind-mcp-data
